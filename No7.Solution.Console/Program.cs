@@ -1,20 +1,28 @@
-﻿using System.Reflection;
+﻿using System.Configuration;
+using System.Reflection;
 
 namespace No7.Solution.Console
 {
-    class Program
+    public class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
-            var tradeStream = Assembly.GetExecutingAssembly().GetManifestResourceStream("No7.Solution.Console.trades.txt");
+            var tradeStream = Assembly.GetExecutingAssembly()
+                .GetManifestResourceStream("No7.Solution.Console.trades.txt");
 
-            TradeService a = new TradeService();
+            string connectionString = ConfigurationManager.ConnectionStrings["TradeData"].ConnectionString;
 
-            a.ReadTable(tradeStream);
+            /*var tradeProcessor = new TradeHandler();
 
-            a.HandleTable();
+            tradeProcessor.HandleTrades(tradeStream);*/
 
-            a.SaveTable();
+            ITradeService a = new TradeService();
+
+            a.ReadStream(tradeStream);
+
+            a.ParseToRecords();
+
+            a.SaveToTable(connectionString);
 
             System.Console.ReadKey();
         }

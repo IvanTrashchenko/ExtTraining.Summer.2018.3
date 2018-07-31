@@ -5,9 +5,9 @@
         public TradeRecord(string destinationCurrency, string sourceCurrency, float lots, decimal price)
         {
             this.DestinationCurrency = destinationCurrency;
-            this.Lots = lots;
-            this.Price = price;
             this.SourceCurrency = sourceCurrency;
+            this.Lots = lots;
+            this.Price = price; 
         }
 
         public string DestinationCurrency { get; }
